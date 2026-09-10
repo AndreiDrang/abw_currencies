@@ -1,0 +1,8 @@
+.osgrep
+.hard-planner
+coverage
+node_modules
+.codegraph
+codedb.snapshot
+build
+*.zip

@@ -1,0 +1,20 @@
+{
+  "name": "abw-currencies",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run --coverage",
+    "format": "prettier --write 'src/**/*.js' 'src/background.js' 'scripts/**/*.mjs' 'tests/**/*.js' 'manifest.json'",
+    "format:check": "prettier --check 'src/**/*.js' 'scripts/**/*.mjs' 'tests/**/*.js' 'manifest.json'",
+    "package:chrome": "node scripts/build-chrome.mjs",
+    "package:firefox": "node scripts/build-firefox.mjs",
+    "package": "npm run package:chrome && npm run package:firefox"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.11",
+    "jsdom": "^30.0.1",
+    "prettier": "^3.9.5",
+    "vitest": "^4.1.11",
+    "web-ext": "^10.6.0"
+  }
+}
