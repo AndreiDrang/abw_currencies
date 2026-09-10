@@ -1,6 +1,6 @@
 # ABW.by Валюты
 
-[![](icons/marquee_promo_tile_raw.png)](icons/big_promo_raw.png)
+[![](icons/big_promo_raw.png)](icons/big_promo_raw.png)
 
 Браузерное расширение (Manifest V3) для Firefox и Chromium-браузеров, которое
 показывает цены на [abw.by](https://abw.by) в выбранной валюте — USD, EUR или
