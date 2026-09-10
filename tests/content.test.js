@@ -232,6 +232,62 @@ describe("car_page.html — detail page price and leasing", () => {
     expect(leasing.textContent).toContain("В лизинг от");
     expect(leasing.textContent).toContain("/мес");
   });
+
+  it("converts leasing offer list prices while preserving action buttons", async () => {
+    await startScript("car_page.html");
+
+    const offers = document.querySelectorAll(
+      ".detail-micro-list__item-action > span.text",
+    );
+    expect(offers.length).toBe(8);
+    expect(offers[0].textContent).toBe(`от ${usd(2016)} / месяц`);
+    expect(offers[1].textContent).toBe(`от ${usd(2060)} / месяц`);
+
+    const pricedOffers = [...offers].filter((offer) =>
+      offer.hasAttribute("data-abw-original-amount"),
+    );
+    expect(pricedOffers.length).toBe(7);
+    for (const offer of pricedOffers) {
+      expect(offer.textContent).not.toContain("BYN");
+      expect(offer.parentElement.querySelector("button, a")).not.toBeNull();
+    }
+
+    expect(offers[2].textContent.trim()).toBe("");
+    expect(offers[2].hasAttribute("data-abw-original-amount")).toBe(false);
+  });
+
+  it("converts the hidden full-screen gallery modal price", async () => {
+    await startScript("car_page.html");
+
+    const price = document.querySelector(".modal-info__price > .byn");
+    expect(price).not.toBeNull();
+    expect(firstNumberTextNode(price).nodeValue).toContain(usd(31498));
+    expect(price.querySelector(".nbrb-icon").style.display).toBe("none");
+
+    fireStorageChange({ selectedCurrency: { newValue: "BYN" } });
+    await flushTicks(4);
+    expect(firstNumberTextNode(price).nodeValue.trim()).toBe("31\u00A0498");
+    expect(price.querySelector(".nbrb-icon").style.display).toBe("");
+  });
+
+  it("restores the leasing offer list text exactly in BYN", async () => {
+    await startScript("car_page.html");
+
+    const fresh = freshFixtureDocument("car_page.html");
+    const original = [
+      ...fresh.querySelectorAll(".detail-micro-list__item-action > span.text"),
+    ].map((element) => element.textContent);
+
+    fireStorageChange({ selectedCurrency: { newValue: "BYN" } });
+    await flushTicks(4);
+
+    const restored = [
+      ...document.querySelectorAll(
+        ".detail-micro-list__item-action > span.text",
+      ),
+    ].map((element) => element.textContent);
+    expect(restored).toEqual(original);
+  });
 });
 
 describe("index.html — homepage card prices", () => {

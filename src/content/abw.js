@@ -7,11 +7,13 @@
     ".top__right > .price > .price-byn", // catalog card price
     ".card__price-block .card__price_byn", // index card price
     "ul.price > li.byn", // detail/product page price
+    ".modal-info__price > .byn", // full-screen gallery modal price
   ];
 
   const LEASING_SELECTORS = [
     ".top__right > a.leasing-offer", // catalog card leasing
     ".detail-info > a.leasing__link", // detail page leasing
+    ".detail-micro-list__item-action > span.text", // leasing offer list
   ];
 
   const DISPLAY_CURRENCIES = ["BYN", "USD", "EUR", "RUB"];
@@ -80,8 +82,9 @@
   }
 
   /**
-   * Parses leasing link text like "Лизинг от 438 р./мес" or
-   * "В лизинг от 1 432 р./мес" while keeping the original wording.
+   * Parses leasing text like "Лизинг от 438 р./мес",
+   * "В лизинг от 1 432 р./мес", or "от 510 BYN / месяц" while
+   * keeping the original wording.
    */
   function parseLeasingText(text) {
     const normalized = text
@@ -93,7 +96,7 @@
     if (looksForeignCurrency(normalized)) return null;
 
     const match = normalized.match(
-      /^(.+?от)\s+(\d[\d\s]*(?:[.,]\d+)?)\s*(р\.|руб\.|BYN)(\/мес.*)?$/i,
+      /^(.*?от)\s+(\d[\d\s]*(?:[.,]\d+)?)\s*(р\.|руб\.|BYN)(\s*\/\s*(?:мес(?:\.|яц)?|month(?:s)?).*)?$/i,
     );
     if (!match) return null;
 
