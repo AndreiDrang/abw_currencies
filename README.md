@@ -1,5 +1,7 @@
 # ABW.by Валюты
 
+[![](icons/marquee_promo_tile_raw.png)](icons/big_promo_raw.png)
+
 Браузерное расширение (Manifest V3) для Firefox и Chromium-браузеров, которое
 показывает цены на [abw.by](https://abw.by) в выбранной валюте — USD, EUR или
 RUB — и возвращает исходные значения в BYN при переключении обратно. Курсы
@@ -20,16 +22,16 @@ RUB — и возвращает исходные значения в BYN при 
 Расширение работает только с проверенными селекторами реальной разметки ABW.by
 (снимки страниц хранятся в `examples/` и используются в тестах):
 
-| Тип страницы                    | Элемент                | Селектор                              |
-| ------------------------------- | ---------------------- | ------------------------------------- |
-| Каталог (`car_catalog.html`)    | основная цена карточки | `.top__right > .price > .price-byn`   |
-| Каталог (`car_catalog.html`)    | лизинговый платёж      | `.top__right > a.leasing-offer`       |
-| Карточка авто (`car_page.html`) | основная цена          | `ul.price > li.byn`                   |
-| Галерея (`car_page.html`)       | цена в полноэкранном окне | `.modal-info__price > .byn`        |
-| Карточка авто (`car_page.html`) | лизинговый платёж      | `.detail-info > a.leasing__link`      |
-| Карточка авто (`car_page.html`) | предложения лизинга    | `.detail-micro-list__item-action > span.text` |
-| Главная (`index.html`)          | цена карточки          | `.card__price-block .card__price_byn` |
-| Товар (`product_page.html`)     | основная цена          | `ul.price > li.byn`                   |
+| Тип страницы                    | Элемент                   | Селектор                                      |
+| ------------------------------- | ------------------------- | --------------------------------------------- |
+| Каталог (`car_catalog.html`)    | основная цена карточки    | `.top__right > .price > .price-byn`           |
+| Каталог (`car_catalog.html`)    | лизинговый платёж         | `.top__right > a.leasing-offer`               |
+| Карточка авто (`car_page.html`) | основная цена             | `ul.price > li.byn`                           |
+| Галерея (`car_page.html`)       | цена в полноэкранном окне | `.modal-info__price > .byn`                   |
+| Карточка авто (`car_page.html`) | лизинговый платёж         | `.detail-info > a.leasing__link`              |
+| Карточка авто (`car_page.html`) | предложения лизинга       | `.detail-micro-list__item-action > span.text` |
+| Главная (`index.html`)          | цена карточки             | `.card__price-block .card__price_byn`         |
+| Товар (`product_page.html`)     | основная цена             | `ul.price > li.byn`                           |
 
 Правила безопасности разметки:
 
