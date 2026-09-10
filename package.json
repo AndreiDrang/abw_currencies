@@ -14,7 +14,7 @@
     "@vitest/coverage-v8": "^4.1.11",
     "jsdom": "^30.0.1",
     "prettier": "^3.9.5",
-    "vitest": "^4.1.11",
+    "vitest": "^5.0.0",
     "web-ext": "^10.6.0"
   }
 }
