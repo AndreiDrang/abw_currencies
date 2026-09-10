@@ -175,7 +175,9 @@ Use narrow selectors verified from the supplied fixture markup. Do not use a bro
 | `car_catalog.html` | main card price | `.top__right > .price > .price-byn` | `36 085` plus `.nbrb-icon` |
 | `car_catalog.html` | leasing monthly price | `.top__right > a.leasing-offer` | `Лизинг от 438 р./мес` |
 | `car_page.html` | main price | `ul.price > li.byn` | `164 832` plus converter button |
+| `car_page.html` | full-screen gallery price | `.modal-info__price > .byn` | `31 498` plus `.nbrb-icon` |
 | `car_page.html` | leasing monthly price | `.detail-info > a.leasing__link` | `В лизинг от 1 432 р./мес` |
+| `car_page.html` | leasing offer list price | `.detail-micro-list__item-action > span.text` | `от 2 016 BYN / месяц` |
 | `index.html` | main card price | `.card__price-block .card__price_byn` | `27 829` plus `.nbrb-icon` |
 | `product_page.html` | main price | `ul.price > li.byn` | `1 376` plus converter button |
 
@@ -187,7 +189,7 @@ The shared `ul.price > li.byn` selector is valid only because it is constrained 
 2. Query the selector registry and process each matching element at most once per pass.
 3. Preserve original text and parsed BYN amount in ABW-namespaced dataset fields, for example `data-abw-currencies-original-text` and `data-abw-currencies-byn-amount`.
 4. For structured main-price nodes, replace only the number/text portion while preserving required sibling controls such as `.nbrb-icon` and `.converter-trigger`; never replace a parent’s complete markup.
-5. For leasing links, parse the number inside their existing text, retain semantic text (`Лизинг от`, `В лизинг от`) and the `/мес` suffix, and replace only the BYN amount/currency representation.
+5. For leasing text elements, parse the number inside their existing text, retain semantic text (`Лизинг от`, `В лизинг от`, `от`) and the monthly suffix (`/мес` or `/ месяц`), and replace only the BYN amount/currency representation.
 6. If the selected currency is `BYN`, restore the exact initial text including NBSP and original punctuation.
 7. Ignore elements that do not parse cleanly, are inside a script/style/form control, or are already a foreign-currency value.
 8. Apply custom rate overrides when present; otherwise use validated NBRB rates.
@@ -247,7 +249,7 @@ Use the existing real ABW HTML snapshots without replacing them with synthetic p
 Load each real fixture through JSDOM and mock only extension APIs/time, never the ABW price markup.
 
 - `car_catalog.html`: convert `.price-byn` and `.leasing-offer`; retain leasing wording and `/мес`.
-- `car_page.html`: convert `ul.price > li.byn` without destroying icon/converter child controls; convert `.leasing__link`.
+- `car_page.html`: convert `ul.price > li.byn` without destroying icon/converter child controls; convert `.modal-info__price > .byn`, `.leasing__link`, and `.detail-micro-list__item-action > span.text`.
 - `index.html`: convert `.card__price_byn` without removing `.nbrb-icon`.
 - `product_page.html`: convert its `ul.price > li.byn` without destroying child controls.
 - Restore original exact BYN text after selecting BYN.
@@ -347,6 +349,6 @@ Do not add `test-worker`, `deploy-worker`, or worker-related variables/targets.
 - Popup works without direct network calls and communicates through background messages.
 - NBRB failure leaves usable cached prices/rates available and shows a clear warning.
 - Each supplied ABW fixture has passing conversion and restoration tests using the selectors in section 7.
-- Main prices preserve required ABW icon/button markup; leasing prices preserve wording and `/мес`.
+- Main prices preserve required ABW icon/button markup; leasing prices preserve wording and their `/мес` or `/ месяц` suffix.
 - No page-wide or generic selector converts unrelated numeric content.
 - Coverage thresholds for background and pure rate logic meet or exceed 80%.
